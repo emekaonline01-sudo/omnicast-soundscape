@@ -34,9 +34,18 @@ function Home() {
             <p className="text-[10px] text-muted-foreground -mt-0.5">Podcasts, sharpened.</p>
           </div>
         </div>
-        <Link to="/search" className="h-10 w-10 rounded-full bg-surface flex items-center justify-center hover:bg-surface-2 transition-colors" aria-label="Search">
-          <Search className="h-5 w-5" />
-        </Link>
+        <div className="flex items-center gap-2">
+          <Link to="/search" className="h-10 w-10 rounded-full bg-surface flex items-center justify-center hover:bg-surface-2 transition-colors" aria-label="Search">
+            <Search className="h-5 w-5" />
+          </Link>
+          <Link
+            to={user ? "/library" : "/auth"}
+            className="h-10 w-10 rounded-full bg-surface flex items-center justify-center hover:bg-surface-2 transition-colors"
+            aria-label={user ? "Your library" : "Sign in or create account"}
+          >
+            <User className="h-5 w-5" />
+          </Link>
+        </div>
       </header>
 
       {featured && <FeaturedBanner ep={featured} />}
