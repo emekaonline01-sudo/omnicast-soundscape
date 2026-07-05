@@ -1,12 +1,14 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { Search, Play, Headphones } from "lucide-react";
+import { Search, Play, Headphones, User } from "lucide-react";
 import { AppShell } from "@/components/AppShell";
 import { EpisodeCard } from "@/components/EpisodeCard";
 import { AdBanner } from "@/components/AdSlot";
 import { episodesQuery, type Episode } from "@/lib/episodes";
 import { CATEGORIES, slugifyCategory, formatShortDuration } from "@/lib/format";
 import { usePlayer } from "@/lib/player";
+import { useAuth } from "@/lib/auth";
+
 
 export const Route = createFileRoute("/")({
   loader: ({ context }) => context.queryClient.ensureQueryData(episodesQuery),
