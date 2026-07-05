@@ -16,6 +16,7 @@ export const Route = createFileRoute("/")({
 });
 
 function Home() {
+  const { user } = useAuth();
   const { data: episodes } = useSuspenseQuery(episodesQuery);
   const featured = episodes.find((e) => e.featured) ?? episodes[0];
   const latest = episodes.slice(0, 8);
