@@ -1,12 +1,14 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { Search, Play, Headphones } from "lucide-react";
+import { Search, Play, Headphones, User } from "lucide-react";
 import { AppShell } from "@/components/AppShell";
 import { EpisodeCard } from "@/components/EpisodeCard";
 import { AdBanner } from "@/components/AdSlot";
 import { episodesQuery, type Episode } from "@/lib/episodes";
 import { CATEGORIES, slugifyCategory, formatShortDuration } from "@/lib/format";
 import { usePlayer } from "@/lib/player";
+import { useAuth } from "@/lib/auth";
+
 
 export const Route = createFileRoute("/")({
   loader: ({ context }) => context.queryClient.ensureQueryData(episodesQuery),
@@ -14,6 +16,7 @@ export const Route = createFileRoute("/")({
 });
 
 function Home() {
+  const { user } = useAuth();
   const { data: episodes } = useSuspenseQuery(episodesQuery);
   const featured = episodes.find((e) => e.featured) ?? episodes[0];
   const latest = episodes.slice(0, 8);
@@ -31,9 +34,18 @@ function Home() {
             <p className="text-[10px] text-muted-foreground -mt-0.5">Podcasts, sharpened.</p>
           </div>
         </div>
-        <Link to="/search" className="h-10 w-10 rounded-full bg-surface flex items-center justify-center hover:bg-surface-2 transition-colors" aria-label="Search">
-          <Search className="h-5 w-5" />
-        </Link>
+        <div className="flex items-center gap-2">
+          <Link to="/search" className="h-10 w-10 rounded-full bg-surface flex items-center justify-center hover:bg-surface-2 transition-colors" aria-label="Search">
+            <Search className="h-5 w-5" />
+          </Link>
+          <Link
+            to={user ? "/library" : "/auth"}
+            className="h-10 w-10 rounded-full bg-surface flex items-center justify-center hover:bg-surface-2 transition-colors"
+            aria-label={user ? "Your library" : "Sign in or create account"}
+          >
+            <User className="h-5 w-5" />
+          </Link>
+        </div>
       </header>
 
       {featured && <FeaturedBanner ep={featured} />}
