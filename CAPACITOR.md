@@ -2,6 +2,7 @@
 
 This project is Capacitor-ready. Follow these steps on your own machine (macOS for iOS, any OS for Android).
 
+
 ## 1. Export & clone
 
 1. In Lovable, click **GitHub → Export to GitHub**.
